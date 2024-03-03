@@ -4,6 +4,7 @@ import personnages.Chef;
 import personnages.Gaulois;
 
 public class Village {
+	private Marche marche;
 	private String nom;
 	private Chef chef;
 	private Gaulois[] villageois;
@@ -58,7 +59,7 @@ public class Village {
 					nb_vide ++;
 				}
 			}
-			System.out.println("Il reste" + nb_vide + "etals non utilisés dans le marché");
+			System.out.println("Il reste" + nb_vide + "etals non utilisï¿½s dans le marchï¿½");
 			System.out.println("");
 		}
 	}
@@ -67,7 +68,7 @@ public class Village {
 	public Village(String nom, int nbVillageoisMaximum, int nb_etals) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
-		Marche marche = new Marche(nb_etals);
+		this.marche = new Marche(nb_etals);
 	}
 
 	public String getNom() {
@@ -115,13 +116,15 @@ public class Village {
 	
 	public String installerVendeur(Gaulois vendeur, String produit,int nbProduit) {
 		StringBuilder chaine = new StringBuilder();
-		chaine.append(vendeur + "cherche à vendre" + nbProduit + produit);
-		int indice_etal = .trouverEtalLibre();
-		chaine.append("Le vendeur" + vendeur + "vend des " + produit + "à l'étal n°" + indice_etal);
+		chaine.append(vendeur + "cherche ï¿½ vendre" + nbProduit + produit);
+		int indice_etal = marche.trouverEtalLibre();
+		chaine.append("Le vendeur" + vendeur + "vend des " + produit + "ï¿½ l'ï¿½tal nï¿½" + indice_etal);
 		return chaine.toString();
 	}
 	
 	 public String rechercherVendeursProduit(String produit) {
-		 
+		 StringBuilder chaine = new StringBuilder();
+		 chaine.append("");
+		 return chaine.toString();
 	 }
 }
