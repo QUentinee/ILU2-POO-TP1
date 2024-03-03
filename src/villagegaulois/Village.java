@@ -124,7 +124,41 @@ public class Village {
 	
 	 public String rechercherVendeursProduit(String produit) {
 		 StringBuilder chaine = new StringBuilder();
-		 chaine.append("");
+		 String nom = "";
+		 int prod = 0;
+		 for(int i = 0; i < marche.etals.length; i++) {
+			 if(marche.etals[i].contientProduit(produit)) {
+				 prod += 1;
+				 nom += marche.etals[i].getVendeur().getNom();
+			 }
+		 }
+		 if(prod == 0) {
+			 chaine.append("Il n'y a pas de vendeur qui propose des fleurs au marché.");
+		 }
+		 else if(prod == 1) {
+			 chaine.append("Seul le vendeur" + nom + "propose des fleurs au marché.");
+		 }
+		 else {
+			 chaine.append("Les vendeurs qui proposent des fleurs sont :" + nom);
+		 }
+		 return chaine.toString();
+	 }
+	 
+	 public Etal rechercherEtal(Gaulois vendeur) {
+		 Etal e = marche.trouverVendeur(vendeur);
+		 return e;
+	 }
+	 
+	 public String partirVendeur(Gaulois vendeur) {
+		 StringBuilder chaine = new StringBuilder();
+		 Etal e = marche.trouverVendeur(vendeur);
+		 chaine.append(e.libererEtal());
+		 return chaine.toString();
+	 }
+	 
+	 public String afficherMarche() {
+		 StringBuilder chaine = new StringBuilder();
+		 
 		 return chaine.toString();
 	 }
 }
