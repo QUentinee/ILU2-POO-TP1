@@ -23,8 +23,7 @@ public class Village {
 		
 		public int trouverEtalLibre() {
 			for(int i = 0; i < etals.length; i++) {
-				etals[i] = new Etal();
-				if(etals[i] != null && etals[i].isEtalOccupe() == false) {
+				if(etals[i].isEtalOccupe() == false) {
 					return i;
 				}
 			}
@@ -43,25 +42,28 @@ public class Village {
 		
 		public Etal trouverVendeur(Gaulois gaulois) {
 			for(int i = 0; i < etals.length; i++) {
-				if(etals[i].getVendeur() == gaulois) {
+				if(etals[i].isEtalOccupe() && etals[i].getVendeur() == gaulois) {
 					return etals[i];
 				}
 			}
 			return null;
 		}
 		
-		public void afficherMarche() {
+		public String afficherMarche() {
 			int nb_vide = 0;
+			StringBuilder chaine = new StringBuilder();
 			for(int i = 0; i < etals.length; i++) {
 				if(etals[i].isEtalOccupe()) {
-					etals[i].afficherEtal();
+					chaine.append(etals[i].afficherEtal());
 				}
 				else {
 					nb_vide ++;
 				}
 			}
-			System.out.println("Il reste" + nb_vide + "etals non utilis�s dans le march�");
-			System.out.println("");
+			if(nb_vide != 0) {
+				chaine.append("Il reste " + nb_vide + " etals non utilises dans le marche.");
+			}
+			return chaine.toString();
 		}
 	}
 	
@@ -70,6 +72,9 @@ public class Village {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
 		this.marche = new Marche(nb_etals);
+		for(int i = 0; i < nb_etals;  i++) {
+			this.marche.etals[i] = new Etal();
+		}
 	}
 
 	public String getNom() {
@@ -126,13 +131,13 @@ public class Village {
 	
 	 public String rechercherVendeursProduit(String produit) {
 		 StringBuilder chaine = new StringBuilder();
-		 String nom = "";
+		 String nom = "\n";
 		 int prod = 0;
 		 if(marche.etals != null) {
 			 for(int i = 0; i < marche.etals.length; i++) {
-				 if(marche.etals[i] != null && marche.etals[i].contientProduit(produit)) {
+				 if(marche.etals[i].isEtalOccupe() && marche.etals[i].contientProduit(produit)) {
 					 prod += 1;
-					 nom += marche.etals[i].getVendeur().getNom();
+					 nom += "- " + marche.etals[i].getVendeur().getNom() + "\n";
 				 }
 			 }
 			 if(prod == 0) {
@@ -162,7 +167,8 @@ public class Village {
 	 
 	 public String afficherMarche() {
 		 StringBuilder chaine = new StringBuilder();
-		 chaine.append("Le marché du village + ");
+		 chaine.append("Le marché du village " + this.getNom() + " possede plusieurs etals : \n");
+		 chaine.append(marche.afficherMarche());
 		 return chaine.toString();
 	 }
 }
