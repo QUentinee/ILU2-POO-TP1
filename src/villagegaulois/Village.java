@@ -66,7 +66,6 @@ public class Village {
 			return chaine.toString();
 		}
 	}
-	
 
 	public Village(String nom, int nbVillageoisMaximum, int nb_etals) {
 		this.nom = nom;
@@ -105,8 +104,11 @@ public class Village {
 		return null;
 	}
 
-	public String afficherVillageois() {
+	public String afficherVillageois() throws VillageSansChefException {
 		StringBuilder chaine = new StringBuilder();
+		if(this.chef == null) {
+			throw new VillageSansChefException("Il ny a pas de chef quel drame.");
+		}
 		if (nbVillageois < 1) {
 			chaine.append("Il n'y a encore aucun habitant au village du chef "
 					+ chef.getNom() + ".\n");
